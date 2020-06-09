@@ -1,0 +1,68 @@
+version: '3'
+
+volumes:
+  postgres_data: {}
+  postgres_data_backups: {}
+
+services:
+  postgresql:
+    image: 'postgres:13'
+    volumes:
+      - 'postgres_data:/var/lib/postgresql/data'
+      - 'postgres_data_backups:/backups'
+    env_file:
+      - enviroment/environment
+#    ports:
+#      - '5433:5432'
+
+  django:
+    image: django-feedparser:dev
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - '.:/opt/project'
+    env_file:
+      - enviroment/environment
+    depends_on:
+      - makemigrations
+      - migrate
+      - mailhog
+      - redis
+    links:
+      - postgresql
+      - mailhog
+      - redis
+    ports:
+      - '8000:8000'
+
+  makemigrations:
+    image: django-feedparser:dev
+    command: python3 manage.py makemigrations
+    volumes:
+      - '.:/opt/project'
+    env_file:
+      - enviroment/environment
+    depends_on:
+      - postgresql
+    links:
+      - postgresql
+
+  migrate:
+    image: django-feedparser:dev
+    command: python3 manage.py migrate
+    volumes:
+      - '.:/opt/project'
+    env_file:
+      - enviroment/environment
+    depends_on:
+      - makemigrations
+      - postgresql
+    links:
+      - postgresql
+
+  mailhog:
+    image: 'mailhog/mailhog:v1.0.0'
+#    ports:
+#      - '8025:8025'
+
+  redis:
+    image: redis:latest
