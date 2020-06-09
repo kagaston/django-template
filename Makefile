@@ -40,7 +40,7 @@ update: ## Grab latest images for project
 	@docker pull mailhog/mailhog:v1.0.0
 
 update-requirements:
-	@bash ./requirements/update-requirements.sh
+	@sh requirements/update-requirements.sh
 
 superuser:
 	@docker exec -it django-project_django_1 python manage.py createsuperuser

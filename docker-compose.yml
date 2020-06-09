@@ -25,12 +25,10 @@ services:
     depends_on:
       - makemigrations
       - migrate
-      - mailhog
-      - redis
+#      - redis
     links:
       - postgresql
-      - mailhog
-      - redis
+#      - redis
     ports:
       - '8000:8000'
 
@@ -59,10 +57,5 @@ services:
     links:
       - postgresql
 
-  mailhog:
-    image: 'mailhog/mailhog:v1.0.0'
-#    ports:
-#      - '8025:8025'
-
-  redis:
-    image: redis:latest
+#  redis:
+#    image: redis:latest
