@@ -1,7 +1,7 @@
 USE_DOCKER=yes
 
 DJANGO_ADMIN_URL=^admin/
-DJANGO_SETTINGS_MODULE=config.settings.local
+DJANGO_SETTINGS_MODULE=config.settings
 DJANGO_SECRET_KEY=)!@y(_a9@pbbc8d1yidg9v18m1_y*4o(ha5a076*86_#*zxb43
 DJANGO_ALLOWED_HOSTS=localhost
 
